@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="canopy">
+  <title>Satellites & Smallholders: Tracing Vietnam's Coffee Supply Chain under EUDR</title>
+  
+  <!-- Approved Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..600&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Canopy earth strata) */
+      --background: #faf6ef;               /* topsoil cream, never sterile white */
+      --surface-container-low: #f0eae0;    /* warm loam: cards, seasonal strips */
+      --surface-container: #e8e0d2;        /* deeper clay-loam: section bands, secondary buttons */
+      --surface-container-high: #ddd3c2;   /* wells, hover fills, inactive timeline cells */
+
+      /* Ink */
+      --on-surface: #2a302b;               /* deep forest charcoal: headings, body */
+      --on-surface-variant: #4a524b;       /* moss-slate: captions, secondary text */
+
+      /* Lines */
+      --outline: #737872;                  /* lichen gray: input borders, axes */
+      --outline-variant: #cbc5b8;          /* soft straw: subtle dividers, gridlines */
+
+      /* Accents */
+      --primary: #366948;                  /* canopy green: primary actions, key series */
+      --on-primary: #ffffff;
+      --primary-container: #d8efe0;        /* pale leaf: highlighted recommendation card */
+      --on-primary-container: #1f4d30;     /* deep leaf ink on pale leaf card */
+      --secondary: #5c635c;                /* stone-moss: monospace labels, metadata */
+      --tertiary: #8f5822;                 /* harvest ochre: kickers, secondary figures */
+      --tertiary-container: #f2d4a7;       /* warm seed-ochre fill: tags, badges */
+      --on-tertiary-container: #6e3f0c;
+      --error: #b83230;
+      --on-error: #ffffff;
+
+      /* Semantic additions */
+      --positive: #2d7a46;
+      --warning: #b36b00;
+      --focus: #366948;
+
+      /* Surfaces and UI states */
+      --surface-pure: #ffffff;
+      --surface-card-translucent: rgb(255 255 255 / 0.45);
+      --surface-sensor-bg: #e2dcd0;
+      --primary-hover: #2a5338;
+      --tertiary-hover: #734518;
+      --error-container: #fbeae9;
+      --on-error-container: #791a18;
+      --warning-container: #fdf5e6;
+      --on-warning-container: #7d4900;
+
+      /* Natural terrain & vector landscape tokens */
+      --forest-deep: #1b3d24;
+      --forest-mid: #1f462a;
+      --forest-dense: #183620;
+      --forest-canopy-layer: #2d5939;
+      --soil-tilled: #d2c2a4;
+
+      /* Data series */
+      --data-1: #366948;                   /* canopy green */
+      --data-2: #8f5822;                   /* harvest ochre */
+      --data-3: #a85438;                   /* terracotta clay */
+      --data-4: #4b6b78;                   /* rain-cistern slate */
+      --data-context: #b5b0a3;             /* context series and baselines */
+
+      /* Fonts */
+      --font-headline: 'Literata', Georgia, serif;
+      --font-body: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-label: 'Geist Mono', monospace;
+
+      /* Shape */
+      --rounded: 0.625rem;                 /* 10px buttons and inputs */
+      --rounded-lg: 1rem;                  /* 16px organic cream-layer cards */
+      --rounded-full: 9999px;
+
+      /* Style effects */
+      --shadow-soft: 0 4px 20px rgb(42 48 43 / 0.06);
+      --shadow-soft-hover: 0 8px 28px rgb(42 48 43 / 0.09);
+      --border-soft: 1px solid rgb(203 197 184 / 0.65);
+      --focus-glow: 0 0 0 4px rgb(54 105 72 / 0.18);
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      /* Type scale for Narrative */
+      --display-size: clamp(2.35rem, 1.6rem + 3vw, 4rem);
+      --headline-size: clamp(1.65rem, 1.25rem + 1.6vw, 2.35rem);
+      --subhead-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.375rem);
+      --body-size: clamp(1.02rem, 0.98rem + 0.2vw, 1.125rem);
+      --label-size: clamp(0.72rem, 0.7rem + 0.1vw, 0.8rem);
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base Reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.68;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+
+    .page-grid {
+      display: grid;
+      gap: var(--space-2xl);
+      padding: var(--space-lg) var(--space-md);
+      max-width: 1140px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    @media (min-width: 768px) {
+      .page-grid {
+        padding: var(--space-2xl) var(--space-lg);
+      }
+    }
+
+    /* Typography Utilities */
+    h1, h2, h3, h4 {
+      font-family: var(--font-headline);
+      color: var(--on-surface);
+      line-height: 1.2;
+      margin: 0 0 var(--space-sm) 0;
+      font-weight: 600;
+    }
+    h1 { font-size: var(--display-size); letter-spacing: -0.015em; }
+    h2 { font-size: var(--headline-size); letter-spacing: -0.01em; margin-top: var(--space-md); }
+    h3 { font-size: var(--subhead-size); font-weight: 600; }
+    p { margin: 0 0 var(--space-md) 0; max-width: 68ch; }
+
+    .kicker {
+      font-family: var(--font-body);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--tertiary);
+      margin-bottom: var(--space-xs);
+      display: inline-block;
+    }
+
+    .label-mono {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--secondary);
+    }
+
+    .editorial-lead {
+      font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem);
+      line-height: 1.6;
+      color: var(--on-surface);
+      font-family: var(--font-headline);
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: var(--space-lg);
+      max-width: 72ch;
+    }
+
+    /* Canopy Cards */
+    .card {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      border: 0;
+      position: relative;
+    }
+
+    .card.is-leaf-highlight {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    .card.is-leaf-highlight h3,
+    .card.is-leaf-highlight .card-title,
+    .card.is-leaf-highlight strong {
+      color: var(--on-primary-container);
+    }
+
+    .card.interactive {
+      box-shadow: var(--shadow-soft);
+      transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+    }
+    .card.interactive:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft-hover);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+
+    /* Almanac Timeline Strip */
+    .season-strip {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    @media (min-width: 768px) {
+      .season-strip {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .season-strip-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .season-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .season-step {
+      font-family: var(--font-label);
+      font-size: 0.6875rem;
+      padding: 6px 12px;
+      border-radius: var(--rounded);
+      background: var(--surface-container-high);
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .season-step.is-prep {
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+      font-weight: 700;
+    }
+
+    .season-step.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 700;
+    }
+
+    /* Badges & Tags */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-label);
+      font-size: 0.6875rem;
+      padding: 4px 10px;
+      border-radius: var(--rounded-full);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .badge-ochre {
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+    }
+
+    .badge-leaf {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    .badge-slate {
+      background: var(--surface-container-high);
+      color: var(--on-surface-variant);
+    }
+
+    .badge-error {
+      background: var(--error-container);
+      color: var(--error);
+    }
+
+    /* Buttons & Interactive Controls */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      padding: 10px 18px;
+      border-radius: var(--rounded);
+      border: 0;
+      cursor: pointer;
+      min-height: 44px;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+      text-decoration: none;
+    }
+
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-glow);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: var(--surface-container);
+      color: var(--on-surface);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-container-high);
+    }
+
+    .btn-tertiary {
+      background: var(--tertiary);
+      color: var(--on-primary);
+    }
+    .btn-tertiary:hover {
+      background: var(--tertiary-hover);
+    }
+
+    .pill-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      background: var(--surface-container);
+      padding: 4px;
+      border-radius: var(--rounded);
+      margin-bottom: var(--space-md);
+    }
+
+    .pill-tab {
+      background: transparent;
+      border: 0;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      padding: 8px 16px;
+      border-radius: calc(var(--rounded) - 2px);
+      cursor: pointer;
+      min-height: 40px;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .pill-tab.active {
+      background: var(--surface-container-low);
+      color: var(--primary);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Key Figures */
+    .stat-display {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-num {
+      font-family: var(--font-headline);
+      font-size: clamp(2rem, 1.6rem + 1.5vw, 2.75rem);
+      font-weight: 600;
+      line-height: 1.1;
+      font-variant-numeric: lining-nums tabular-nums;
+      color: var(--primary);
+    }
+
+    .stat-caption {
+      color: var(--tertiary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .is-leaf-highlight .stat-num {
+      color: var(--on-primary-container);
+    }
+
+    .is-leaf-highlight .stat-caption {
+      color: var(--on-primary-container);
+    }
+
+    /* Form Inputs */
+    .input-group {
+      margin-bottom: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-label {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--on-surface-variant);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      background: var(--surface-container-high);
+      border-radius: var(--rounded-full);
+      outline: none;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    select, input[type="text"], input[type="number"] {
+      font-family: inherit;
+      font-size: 0.9375rem;
+      padding: 10px 14px;
+      border: var(--border-soft);
+      border-radius: var(--rounded);
+      background: var(--background);
+      color: var(--on-surface);
+      min-height: 44px;
+    }
+    select:focus-visible, input:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-glow);
+      border-color: var(--primary);
+    }
+
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      border-radius: var(--rounded-lg);
+      background: var(--surface-container-low);
+      margin: var(--space-md) 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9375rem;
+    }
+
+    th {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 14px 18px;
+      background: var(--surface-container);
+      color: var(--secondary);
+      border-bottom: var(--border-soft);
+    }
+
+    td {
+      padding: 16px 18px;
+      border-bottom: var(--border-soft);
+      vertical-align: top;
+      color: var(--on-surface);
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    /* Callout & Quotes */
+    .pull-quote {
+      border-left: 4px solid var(--primary);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--surface-container-low);
+      border-radius: 0 var(--rounded-lg) var(--rounded-lg) 0;
+      margin: var(--space-lg) 0;
+    }
+    .pull-quote-text {
+      font-family: var(--font-headline);
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--on-surface);
+      margin-bottom: var(--space-xs);
+      line-height: 1.5;
+    }
+    .pull-quote-attr {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--tertiary);
+      font-weight: 600;
+    }
+
+    /* Flowchart / Supply Chain SVG & Steps */
+    .supply-chain-diagram {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      margin: var(--space-md) 0;
+    }
+
+    .node-chain {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-md);
+      position: relative;
+    }
+
+    .chain-node {
+      background: var(--background);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      border: 1px solid var(--outline-variant);
+      cursor: pointer;
+      transition: all var(--dur-short) var(--ease-out);
+      position: relative;
+    }
+
+    .chain-node:hover, .chain-node.active {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-soft-hover);
+      transform: translateY(-2px);
+    }
+
+    .chain-node.active {
+      border-left: 5px solid var(--primary);
+      background: var(--surface-pure);
+    }
+
+    .node-step-badge {
+      font-family: var(--font-label);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .node-name {
+      font-family: var(--font-headline);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--on-surface);
+    }
+
+    .node-bottleneck-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: var(--rounded-full);
+      background-color: var(--warning);
+      margin-right: 4px;
+    }
+
+    /* Visual Encroachment Canvas */
+    .encroach-container {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      margin: var(--space-md) 0;
+    }
+
+    .encroach-canvas-wrapper {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      background: var(--surface-sensor-bg);
+      border-radius: var(--rounded);
+      overflow: hidden;
+      margin: var(--space-md) 0;
+      border: 1px solid var(--outline-variant);
+    }
+
+    /* Audit Simulation Cards */
+    .audit-scenario-card {
+      background: var(--background);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      border: 1px solid var(--outline-variant);
+      margin-bottom: var(--space-md);
+    }
+
+    .audit-feedback {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      margin-top: var(--space-sm);
+      display: none;
+    }
+    .audit-feedback.show {
+      display: block;
+    }
+    .audit-feedback.compliant {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      border-left: 4px solid var(--primary);
+    }
+    .audit-feedback.non-compliant {
+      background: var(--error-container);
+      color: var(--on-error-container);
+      border-left: 4px solid var(--error);
+    }
+    .audit-feedback.at-risk {
+      background: var(--warning-container);
+      color: var(--on-warning-container);
+      border-left: 4px solid var(--warning);
+    }
+
+    .card-translucent {
+      background: var(--surface-card-translucent);
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+    }
+
+    /* Accordion Details */
+    details {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded);
+      padding: var(--space-md) var(--space-lg);
+      margin-bottom: var(--space-sm);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    details[open] {
+      background: var(--surface-container);
+    }
+    summary {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.05rem;
+      cursor: pointer;
+      color: var(--on-surface);
+      list-style-position: inside;
+    }
+    details p {
+      margin-top: var(--space-sm);
+      font-size: 0.9375rem;
+    }
+
+    /* Inline Icons */
+    .icon-svg {
+      display: inline-block;
+      width: 1.2em;
+      height: 1.2em;
+      vertical-align: -0.2em;
+      stroke-width: 2;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Responsive media rules */
+    @media (max-width: 640px) {
+      .page-grid {
+        padding: var(--space-md) var(--space-sm);
+        gap: var(--space-xl);
+      }
+      .card {
+        padding: var(--space-md);
+      }
+      .btn {
+        width: 100%;
+      }
+      .node-chain {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-grid">
+
+  <!-- TOP ALMANAC / TIMELINE STRIP -->
+  <header>
+    <div class="season-strip">
+      <div class="season-strip-header">
+        <span class="label-mono">Regulatory Milestones</span>
+        <span class="badge badge-ochre">EUDR Timeline</span>
+      </div>
+      <div class="season-steps">
+        <div class="season-step is-prep">
+          <span>2020</span>
+          <span>Baseline Cutoff</span>
+        </div>
+        <div class="season-step">
+          <span>2023</span>
+          <span>Regulation Passed</span>
+        </div>
+        <div class="season-step">
+          <span>2024</span>
+          <span>VN Action Plan</span>
+        </div>
+        <div class="season-step is-active">
+          <span>2025</span>
+          <span>Cadastre Rollout</span>
+        </div>
+        <div class="season-step">
+          <span>2026</span>
+          <span>Strict Enforcement</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO NARRATIVE BLOCK -->
+  <section id="hero">
+    <span class="kicker">Critical Supply Chain Investigation · Central Highlands, Vietnam</span>
+    <h1>Satellites & Smallholders: Tracing Vietnam's Coffee Supply Chain under EUDR</h1>
+    
+    <p class="editorial-lead">
+      When European regulations mandate pixel-level satellite proof of zero deforestation, who absorbs the cost? 
+      Beneath the high-tech veneer of digital traceability lies an unequal landscape where 600,000 smallholders face 
+      strict documentation hurdles, unclear customary land rights, and the quiet threat of market exclusion.
+    </p>
+
+    <!-- KEY STATS CALLOUT ROW (With 1 pale leaf highlight card) -->
+    <div class="card-grid" style="margin-top: var(--space-lg);">
+      <div class="card stat-display">
+        <span class="label-mono">Smallholder Backbone</span>
+        <div class="stat-num">600,000+</div>
+        <span class="stat-caption">Farming households cultivating the Central Highlands</span>
+      </div>
+
+      <div class="card stat-display is-leaf-highlight">
+        <span class="label-mono">Production Structure</span>
+        <div class="stat-num">85–90%</div>
+        <span class="stat-caption">Of national Robusta output comes from plots &lt;1.2 hectares</span>
+      </div>
+
+      <div class="card stat-display">
+        <span class="label-mono">Export Dependency</span>
+        <div class="stat-num">40%+</div>
+        <span class="stat-caption">Vietnam coffee exports destined for the European Union ($8.9B in 2025)</span>
+      </div>
+
+      <div class="card stat-display">
+        <span class="label-mono">Inflexible Cut-off</span>
+        <div class="stat-num">31 Dec 2020</div>
+        <span class="stat-caption">Article 2 baseline: zero deforestation on parcel after this date</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROLOGUE: THE MIRAGE OF NEUTRAL TECHNOLOGY -->
+  <section id="thesis">
+    <div class="card" style="border-left: 6px solid var(--primary); background: var(--surface-container-low);">
+      <span class="kicker">Central Thesis & Analytical Stance</span>
+      <h2 style="margin-top: 0;">Beyond the Tech Utopia: Why Digital Traceability Is Not Automatically Fair</h2>
+      <p>
+        In policy briefings and corporate ESG announcements, the European Union Deforestation Regulation (EUDR, Regulation 2023/1115) 
+        is celebrated as an objective, satellite-driven triumph. Geolocation coordinates (latitude and longitude) coupled with orbital imagery 
+        promise to cleanly excise deforestation from European supply chains.
+      </p>
+      <p>
+        However, as empirical research in the Central Highlands (Dak Lak, Lam Dong, Gia Lai, Dak Nong) confirms, 
+        <strong>digital mapping and NGO interventions do not inherently produce fairness</strong>. Instead, data collection mechanisms 
+        interact with deep-seated structural inequalities: fragmented land plots, ethnic minority language barriers, multi-tiered trader 
+        intermediaries, and ambiguous state forestry boundaries. Traceability can easily become an instrument of risk offloading, where downstream 
+        European roasters demand total legal certainty while leaving smallholders to shoulder the administrative and financial weight.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION 1: COACH HEZRON'S 3 DIMENSIONS OF FAIRNESS -->
+  <section id="three-dimensions">
+    <span class="kicker">Conceptual Framework</span>
+    <h2>The Three Dimensions of Smallholder Fairness</h2>
+    <p>
+      To evaluate whether compliance systems genuinely protect producers or merely police them, we analyze the EUDR 
+      transition across three distinct dimensions of fairness:
+    </p>
+
+    <!-- Interactive 3 Dimensions Tabs / Detail Cards -->
+    <div class="pill-tabs" id="dimensionTabs">
+      <button class="pill-tab active" onclick="switchDimension('cost')">1. Cost Distribution Equity</button>
+      <button class="pill-tab" onclick="switchDimension('access')">2. Market Access & 'Safe Zones'</button>
+      <button class="pill-tab" onclick="switchDimension('sovereignty')">3. Data Sovereignty & Privacy</button>
+    </div>
+
+    <div id="dimensionContentCost" class="card interactive">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-sm);">
+        <div>
+          <span class="badge badge-ochre">Dimension 1</span>
+          <h3 style="margin-top: var(--space-xs);">Equitable Distribution of Compliance Costs</h3>
+        </div>
+        <span class="label-mono">Economic Justice</span>
+      </div>
+      <p>
+        While multinational roasters and retail chains command high margins on consumer coffee, farmgate bean prices fluctuate dramatically. 
+        Meeting EUDR standards requires digital polygon surveys, GPS validation, deforestation screening, and legal audits. 
+        Surveys from the Sustainable Agricultural Supply Chains Initiative (SASI) and Wageningen University show that 
+        <strong>less than 5% of smallholders receive direct technical or financial subsidies from EU buyers</strong>.
+      </p>
+      <p>
+        Instead, the costs of GPS boundary verification (averaging $35 to $60 per farm plot) are quietly pushed down to local cooperatives 
+        or deducted from collector purchase prices. For a family cultivating a 0.8-hectare farm with net annual earnings under $2,000, 
+        compliance expenses can swallow 3% to 8% of annual household income—whereas for a European trading conglomerate, the per-kilogram 
+        software cost is negligible (fractions of a cent).
+      </p>
+
+      <!-- Cost Burden Calculator Widget -->
+      <div style="background: var(--surface-container); border-radius: var(--rounded); padding: var(--space-md); margin-top: var(--space-md);">
+        <span class="label-mono">Interactive Model: Compliance Cost Burden on Farm Income</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-md); margin-top: var(--space-sm);">
+          <div class="input-group">
+            <label class="input-label" for="calcFarmSize">Farm Size (Hectares): <span id="farmSizeVal">0.9</span> ha</label>
+            <input type="range" id="calcFarmSize" min="0.4" max="3.0" step="0.1" value="0.9" oninput="updateCostModel()">
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="calcPlotCount">Dispersed Parcels: <span id="plotCountVal">2</span> plots</label>
+            <input type="range" id="calcPlotCount" min="1" max="4" step="1" value="2" oninput="updateCostModel()">
+          </div>
+          <div class="input-group">
+            <label class="input-label" for="calcBuyerSupport">Buyer Cost Sharing: <span id="buyerSupportVal">0</span>%</label>
+            <input type="range" id="calcBuyerSupport" min="0" max="100" step="10" value="0" oninput="updateCostModel()">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-md); margin-top: var(--space-md); border-top: 1px solid var(--outline-variant); padding-top: var(--space-sm);">
+          <div>
+            <span class="label-mono">Mapping & Verification Fee</span>
+            <div id="estSurveyCost" style="font-family: var(--font-headline); font-size: 1.4rem; font-weight: 600; color: var(--tertiary);">$90.00</div>
+          </div>
+          <div>
+            <span class="label-mono">Farmer Share of Bill</span>
+            <div id="estFarmerCost" style="font-family: var(--font-headline); font-size: 1.4rem; font-weight: 600; color: var(--error);">$90.00</div>
+          </div>
+          <div>
+            <span class="label-mono">Share of Annual Net Margin</span>
+            <div id="estIncomeImpact" style="font-family: var(--font-headline); font-size: 1.4rem; font-weight: 600; color: var(--on-surface);">4.5%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="dimensionContentAccess" class="card interactive" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-sm);">
+        <div>
+          <span class="badge badge-ochre">Dimension 2</span>
+          <h3 style="margin-top: var(--space-xs);">Market Access & The Risk of 'Safe-Zone' Exclusion</h3>
+        </div>
+        <span class="label-mono">Inclusion & Leakage</span>
+      </div>
+      <p>
+        The EUDR imposes severe sanctions for non-compliance, including fines up to 4% of EU turnover and confiscation of shipments. 
+        Under intense regulatory scrutiny, international coffee buyers naturally gravitate towards simplicity and certainty. 
+        In Brazil, an importer can survey a single 500-hectare automated plantation with one polygon. In Vietnam's Central Highlands, 
+        sourcing that same 500 hectares requires mapping up to <strong>550 separate smallholder families</strong>, checking 550 title deeds, 
+        and reconciling multiple contested cadastral borders.
+      </p>
+      <p>
+        This creates a perverse incentive known as <em>'Safe-Zone Cherry-Picking'</em>: buyers withdraw from complex forest-edge regions 
+        and vulnerable ethnic minority communities, opting instead for large, well-documented farms. As observed by researchers 
+        (Forest Trees and Livelihoods, 2025; Wageningen, 2023), excluded farmers are forced to sell at steep discounts to non-EU markets 
+        (such as China or local instant coffee processors) or switch land use to less regulated crops. Crucially, <strong>excluding smallholders does not stop deforestation; 
+        it merely drives leakage while destroying rural livelihoods.</strong>
+      </p>
+      <div class="pull-quote">
+        <div class="pull-quote-text">
+          "If buyers simply avoid sourcing from forest-adjacent communities to minimize paperwork, the poorest farmers are pushed out of the supply chain—ironically increasing poverty-driven pressure on remaining natural forests."
+        </div>
+        <div class="pull-quote-attr">Ethical Trade Denmark & IDH Landscape Review</div>
+      </div>
+    </div>
+
+    <div id="dimensionContentSovereignty" class="card interactive" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-sm);">
+        <div>
+          <span class="badge badge-ochre">Dimension 3</span>
+          <h3 style="margin-top: var(--space-xs);">Data Sovereignty, Privacy & Data Extraction</h3>
+        </div>
+        <span class="label-mono">Digital Rights</span>
+      </div>
+      <p>
+        To satisfy European customs declarations, smallholders are asked to disclose the exact GPS coordinates of their farms, 
+        crop yield volumes, and personal identification to commercial apps managed by multinational exporters and agtech vendors. 
+        Yet rarely are farmers informed about who stores this geospatial data, how long it is retained, or whether it will be used for 
+        carbon credit monetization, predictive commodity pricing, or commercial audits.
+      </p>
+      <p>
+        Furthermore, in rural Vietnam, uploading coordinates of farms cultivated on historically ambiguous forestry borders 
+        exposes farmers to potential tenure disputes or administrative fines by local forestry inspectors. 
+        True fairness demands <strong>data sovereignty</strong>: smallholders and local farmer cooperatives must retain ownership of their 
+        agricultural polygons, with clear consent protocols and guaranteed compensation for sharing proprietary farm intelligence.
+      </p>
+      <div style="background: var(--surface-container); border-radius: var(--rounded); padding: var(--space-md); margin-top: var(--space-md);">
+        <strong style="color: var(--primary);">Key Insight from SASI / GIZ Learning Report (2024):</strong>
+        <p style="margin-bottom: 0; font-size: 0.9375rem;">
+          Open-source, farmer-centric platforms (like those piloted by Fairfood and Tradin Organic) demonstrate that unless farmers 
+          receive explicit data incentives and retain cooperative data governance, digital systems become purely extractive, leading 
+          to farmer distrust, incorrect coordinates, and eventual data abandonment.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: SUPPLY CHAIN ARCHITECTURE & TRACEABILITY PIPELINE -->
+  <section id="supply-chain">
+    <span class="kicker">Vietnam-Specific Supply Chain Realities</span>
+    <h2>From Soil to Container: Where Traceability Breaks Down</h2>
+    <p>
+      Unlike consolidated agricultural systems, Vietnam's coffee sector relies on a deeply decentralized, multi-tiered network. 
+      Over 90% of Robusta is funneled through informal local aggregators (*đại lý*) before ever reaching an export processing mill. 
+      Click through each node in the chain below to inspect where the physical bean flow clashes with the EUDR's digital information mandate:
+    </p>
+
+    <!-- Interactive Supply Chain Flowchart -->
+    <div class="supply-chain-diagram">
+      <div class="node-chain" id="supplyChainNodes">
+        
+        <div class="chain-node active" id="node-1" onclick="selectSupplyNode(1)">
+          <div class="node-step-badge">STAGE 01</div>
+          <div class="node-name">Smallholder Plot</div>
+          <span class="badge badge-leaf">&lt;1 ha Dispersed</span>
+          <p style="font-size: 0.8rem; margin: 6px 0 0; color: var(--on-surface-variant);">600,000 households across Dak Lak, Lam Dong, Gia Lai.</p>
+        </div>
+
+        <div class="chain-node" id="node-2" onclick="selectSupplyNode(2)">
+          <div class="node-step-badge">STAGE 02</div>
+          <div class="node-name">Level 2 Agent</div>
+          <span class="badge badge-ochre"><span class="node-bottleneck-indicator"></span>Đại Lý Cấp 2</span>
+          <p style="font-size: 0.8rem; margin: 6px 0 0; color: var(--on-surface-variant);">Village motorbike collectors; cash advances; mixed bags.</p>
+        </div>
+
+        <div class="chain-node" id="node-3" onclick="selectSupplyNode(3)">
+          <div class="node-step-badge">STAGE 03</div>
+          <div class="node-name">Level 1 Collector</div>
+          <span class="badge badge-ochre"><span class="node-bottleneck-indicator"></span>Đại Lý Cấp 1</span>
+          <p style="font-size: 0.8rem; margin: 6px 0 0; color: var(--on-surface-variant);">District warehouse; bulk drying; physical lot blending.</p>
+        </div>
+
+        <div class="chain-node" id="node-4" onclick="selectSupplyNode(4)">
+          <div class="node-step-badge">STAGE 04</div>
+          <div class="node-name">Processing & Exporter</div>
+          <span class="badge badge-slate">Milling & Sorting</span>
+          <p style="font-size: 0.8rem; margin: 6px 0 0; color: var(--on-surface-variant);">Simexco, Intimex, ECOM; DDS generation & screening.</p>
+        </div>
+
+        <div class="chain-node" id="node-5" onclick="selectSupplyNode(5)">
+          <div class="node-step-badge">STAGE 05</div>
+          <div class="node-name">EU Port & Roaster</div>
+          <span class="badge badge-leaf">Due Diligence Filing</span>
+          <p style="font-size: 0.8rem; margin: 6px 0 0; color: var(--on-surface-variant);">EU Information System; customs clearance; roasters.</p>
+        </div>
+
+      </div>
+
+      <!-- Node Detail Panel -->
+      <div id="nodeDetailPanel" style="background: var(--background); border-radius: var(--rounded); padding: var(--space-md); margin-top: var(--space-md); border-left: 4px solid var(--primary);">
+        <h3 id="nodeDetailTitle" style="margin-top: 0;">Stage 01: The Smallholder Farm (Highland Agroforestry)</h3>
+        <div id="nodeDetailBody">
+          <p>
+            The foundation of Vietnam's Robusta miracle: approximately 600,000 farming households tending small plots (average 0.8 to 1.2 hectares). 
+            Many plots intercrop coffee with pepper vines, durian, and shade trees to build ecological resilience. 
+            However, <strong>30% of farmers lack smartphones</strong>, and many ethnic minority producers (Ede, M'nong, K'ho) face Vietnamese 
+            language barriers, making standalone digital reporting nearly impossible without cooperative assistance.
+          </p>
+          <div style="display: flex; gap: var(--space-md); flex-wrap: wrap;">
+            <div><span class="label-mono">EUDR Requirement:</span> Plot coordinates (single point for &lt;4 ha; polygons demanded by buyers).</div>
+            <div><span class="label-mono">Primary Risk:</span> Missing Red Book land titles; boundary overlap with state forestry zoning.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: LEGAL MANDATES VS BUYER GOLD-PLATING -->
+  <section id="regulatory-matrix">
+    <span class="kicker">Regulatory Analysis</span>
+    <h2>Formal EUDR Mandate vs. Downstream Buyer 'Gold-Plating'</h2>
+    <p>
+      A crucial finding in supply chain governance is the gap between <strong>what Regulation (EU) 2023/1115 actually requires by law</strong> 
+      and <strong>what risk-averse European roasters and multinational exporters demand in practice</strong>. 
+      To insulate themselves from regulatory liability, buyers routinely "gold-plate" compliance, shifting disproportionate burdens onto Vietnamese producers:
+    </p>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 22%;">Compliance Area</th>
+            <th style="width: 38%;">EUDR Legal Obligation (EU Law)</th>
+            <th style="width: 40%;">Buyer & Exporter Demand ('Gold-Plating')</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Plot Geolocation</strong></td>
+            <td>
+              <strong>Article 9:</strong> Plots under 4 hectares require only a <em>single GPS point</em> (latitude & longitude to 6 decimal places). Polygons are only legally mandated for plots ≥4 ha.
+            </td>
+            <td>
+              Exporters and EU brands demand <strong>full multi-point polygon boundaries for every 0.4 ha garden</strong>, transferring surveying labor and mobile app licensing fees to local farmers.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Land Tenure & Legality</strong></td>
+            <td>
+              <strong>Article 3:</strong> Commodities must be produced in accordance with relevant national legislation regarding land use, labor, and environmental rights.
+            </td>
+            <td>
+              Demanding <strong>formal updated "Red Books" (LURCs) on 100% of plots</strong>, immediately disqualifying farmers with customary tenure, family inheritance transfers, or pending commune reviews.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Deforestation Cut-off</strong></td>
+            <td>
+              <strong>Article 2:</strong> Coffee must not be produced on land deforested or degraded after <strong>31 December 2020</strong>. Deforestation prior to 2020 is not prohibited by EUDR.
+            </td>
+            <td>
+              Refusing to buy from any farm located within 1–2 km of a national park or protected area ("buffer zone blacklisting"), regardless of whether the farm was established 30 years ago.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Liability & Risk Transfer</strong></td>
+            <td>
+              <strong>Article 4:</strong> EU operators placing products on the Union market retain ultimate legal responsibility for the Due Diligence Statement (DDS).
+            </td>
+            <td>
+              Inserting <strong>punitive indemnity clauses</strong> in local supplier contracts, demanding that Vietnamese exporters and cooperatives reimburse European buyers for any EU border fines or rejected shipments.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Private Certifications</strong></td>
+            <td>
+              <strong>Recital 52:</strong> Voluntary certification systems (Fairtrade, Rainforest Alliance, 4C) can support risk assessment, but are <em>not mandatory</em> and cannot substitute for due diligence.
+            </td>
+            <td>
+              Requiring farmers to maintain existing costly private certifications <em>on top of</em> submitting raw EUDR GPS coordinates, multiplying administrative audit fatigue.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 4: THE CENTRAL HIGHLANDS REALITY: MICRO-ENCROACHMENT & LAND BOTTLENECK -->
+  <section id="micro-encroachment">
+    <span class="kicker">Practitioner Field Insights · GIS Consultant Interview</span>
+    <h2>The Satellite Blindspot: 'Rolling Up the Sleeve' & Remote Sensing Limits</h2>
+    
+    <p>
+      In international discussions, deforestation is often imagined as catastrophic industrial clearing—bulldozers razing hundreds of hectares of pristine jungle. 
+      In Vietnam's coffee heartland, however, encroachment takes a profoundly different form.
+    </p>
+
+    <div class="card" style="background: var(--surface-container-low); margin-bottom: var(--space-lg);">
+      <div style="display: flex; gap: var(--space-md); align-items: flex-start; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 280px;">
+          <h3 style="margin-top: 0; color: var(--tertiary);">The 'Cuốn Chiếu' (Rolling Up the Sleeve) Strategy</h3>
+          <p>
+            As revealed by senior GIS consultant <strong>Nguyen Thi Thuc Anh</strong>, who advises NGOs in Son La and the Central Highlands, 
+            recent surges in global coffee prices have renewed incentives for subtle farm expansion. 
+            Rather than clearing visible swathes, farmers apply a gradual technique known locally as <em>cuốn chiếu</em> ("rolling up the mat or sleeve").
+          </p>
+          <p>
+            A farmer quietly clears a narrow strip of natural forest undergrowth—frequently only <strong>40 to 50 centimeters wide</strong>—just enough 
+            to plant an extra row of Arabica or Robusta bushes along the forest margin. A year later, another 50 centimeters is claimed.
+          </p>
+        </div>
+
+        <div style="flex: 1; min-width: 280px; background: var(--surface-container); border-radius: var(--rounded); padding: var(--space-md);">
+          <span class="label-mono">The Resolution Trap</span>
+          <p style="font-size: 0.9375rem; margin-top: 6px;">
+            Standard optical satellites cannot easily detect this micro-scale creep:
+          </p>
+          <ul style="font-size: 0.875rem; padding-left: 20px; margin: 0; color: var(--on-surface-variant);">
+            <li><strong>Landsat (30m):</strong> 1 pixel covers 900 m². A 50 cm border creep represents barely 5% of one pixel, lost in natural spectral noise.</li>
+            <li><strong>Sentinel-2 (10m):</strong> 1 pixel covers 100 m². Mixed pixels fail to separate shaded coffee canopies from native tree crowns.</li>
+            <li><strong>JRC GFC2020:</strong> The EU's 10m reference map is non-binding and often misclassifies shaded agroforestry as natural forest.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Interactive Resolution Simulation -->
+      <div class="encroach-container" style="margin-top: var(--space-md);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-sm);">
+          <div>
+            <span class="label-mono">Interactive Remote Sensing Viewer</span>
+            <h4 style="margin: 2px 0 0;">Simulating Micro-Encroachment Detection Across Satellite Sensors</h4>
+          </div>
+          <div class="pill-tabs" style="margin-bottom: 0;">
+            <button class="pill-tab active" onclick="setSensorView('landsat')">Landsat (30m)</button>
+            <button class="pill-tab" onclick="setSensorView('sentinel')">Sentinel-2 (10m)</button>
+            <button class="pill-tab" onclick="setSensorView('drone')">Planet / High-Res (3m)</button>
+          </div>
+        </div>
+
+        <!-- SVG Vector Canvas representing satellite view -->
+        <div class="encroach-canvas-wrapper" id="sensorCanvas">
+          <svg viewBox="0 0 800 280" style="width: 100%; height: 100%; display: block;" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid30m" width="120" height="120" patternUnits="userSpaceOnUse">
+                <rect width="120" height="120" fill="none" stroke="var(--outline-variant)" stroke-width="1.5" stroke-dasharray="2,2"/>
+              </pattern>
+              <pattern id="grid10m" width="40" height="40" patternUnits="userSpaceOnUse">
+                <rect width="40" height="40" fill="none" stroke="var(--outline-variant)" stroke-width="1" stroke-dasharray="1,1"/>
+              </pattern>
+              <pattern id="grid3m" width="12" height="12" patternUnits="userSpaceOnUse">
+                <rect width="12" height="12" fill="none" stroke="var(--data-context)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+
+            <!-- Background Forest Zone (Left) -->
+            <rect x="0" y="0" width="380" height="280" fill="var(--forest-canopy-layer)" opacity="0.85"/>
+            <!-- 50cm Micro Encroachment Strip -->
+            <rect id="encroachStrip" x="380" y="0" width="40" height="280" fill="var(--tertiary)" opacity="0.75"/>
+            <!-- Cultivated Coffee Farm (Right) -->
+            <rect x="420" y="0" width="380" height="280" fill="var(--soil-tilled)"/>
+
+            <!-- Visual Coffee Shrubs Representation -->
+            <g opacity="0.6">
+              <circle cx="450" cy="50" r="14" fill="var(--primary)"/>
+              <circle cx="510" cy="50" r="14" fill="var(--primary)"/>
+              <circle cx="570" cy="50" r="14" fill="var(--primary)"/>
+              <circle cx="630" cy="50" r="14" fill="var(--primary)"/>
+              <circle cx="450" cy="110" r="14" fill="var(--primary)"/>
+              <circle cx="510" cy="110" r="14" fill="var(--primary)"/>
+              <circle cx="570" cy="110" r="14" fill="var(--primary)"/>
+              <circle cx="630" cy="110" r="14" fill="var(--primary)"/>
+              <circle cx="450" cy="170" r="14" fill="var(--primary)"/>
+              <circle cx="510" cy="170" r="14" fill="var(--primary)"/>
+              <circle cx="570" cy="170" r="14" fill="var(--primary)"/>
+              <circle cx="630" cy="170" r="14" fill="var(--primary)"/>
+              <circle cx="450" cy="230" r="14" fill="var(--primary)"/>
+              <circle cx="510" cy="230" r="14" fill="var(--primary)"/>
+              <circle cx="570" cy="230" r="14" fill="var(--primary)"/>
+              <circle cx="630" cy="230" r="14" fill="var(--primary)"/>
+            </g>
+
+            <!-- Natural Forest Trees (Left) -->
+            <g opacity="0.7">
+              <circle cx="100" cy="70" r="35" fill="var(--forest-deep)"/>
+              <circle cx="220" cy="60" r="42" fill="var(--forest-mid)"/>
+              <circle cx="310" cy="90" r="30" fill="var(--forest-deep)"/>
+              <circle cx="140" cy="180" r="45" fill="var(--forest-dense)"/>
+              <circle cx="270" cy="190" r="38" fill="var(--forest-mid)"/>
+              <circle cx="340" cy="220" r="28" fill="var(--forest-deep)"/>
+            </g>
+
+            <!-- Micro Encroachment row (Newly planted coffee bushes) -->
+            <g id="encroachShrubs" opacity="0.9">
+              <circle cx="400" cy="40" r="9" fill="var(--tertiary)"/>
+              <circle cx="400" cy="90" r="9" fill="var(--tertiary)"/>
+              <circle cx="400" cy="140" r="9" fill="var(--tertiary)"/>
+              <circle cx="400" cy="190" r="9" fill="var(--tertiary)"/>
+              <circle cx="400" cy="240" r="9" fill="var(--tertiary)"/>
+            </g>
+
+            <!-- Grid Overlay Layer -->
+            <rect id="sensorGridOverlay" width="800" height="280" fill="url(#grid30m)"/>
+
+            <!-- Annotations -->
+            <text x="30" y="35" fill="var(--on-primary)" font-family="'Geist Mono', monospace" font-size="12" font-weight="600" letter-spacing="1">PROTECTED NATURAL FOREST</text>
+            <text x="440" y="35" fill="var(--on-surface)" font-family="'Geist Mono', monospace" font-size="12" font-weight="600" letter-spacing="1">EXISTING COFFEE PLOT (PRE-2020)</text>
+            <text id="encroachLabel" x="320" y="265" fill="var(--tertiary-container)" font-family="'Geist Mono', monospace" font-size="11" font-weight="700">40-50 cm CREEP ZONE</text>
+          </svg>
+        </div>
+
+        <div id="sensorExplanation" style="background: var(--surface-container); border-radius: var(--rounded); padding: var(--space-md);">
+          <strong id="sensorTitle" style="color: var(--primary);">Landsat-8 (30-meter Pixel Resolution): Undetected</strong>
+          <p id="sensorDesc" style="margin-bottom: 0; font-size: 0.9375rem;">
+            At 30m resolution, one sensor pixel averages out over 900 square meters. The 40–50 cm encroachment strip makes up less than 5% of the pixel's spectral signature. The automated deforestation algorithms report "stable forest canopy," completely blind to the gradual ground clearing.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE LAND TENURE & RED BOOK BOTTLENECK -->
+    <div class="card" style="margin-top: var(--space-lg); border-left: 6px solid var(--tertiary);">
+      <span class="kicker">Institutional Bottleneck</span>
+      <h3 style="margin-top: 0;">The 'Red Book' Dilemma & Conflicting Forest Definitions</h3>
+      <p>
+        The second massive hurdle in Vietnam is proof of legality. Under EUDR Article 3, goods must comply with local land legislation. 
+        In Vietnam, land use is formalized through the <strong>Land Use Rights Certificate (LURC or Sổ Đỏ / 'Red Book')</strong>. 
+        However, the realities of the Central Highlands reveal a severe documentation gap:
+      </p>
+      
+      <div class="card-grid" style="margin-top: var(--space-md);">
+        <div style="background: var(--background); padding: var(--space-md); border-radius: var(--rounded);">
+          <strong style="color: var(--tertiary);">1. Historical Agroforestry Expansion</strong>
+          <p style="font-size: 0.875rem; margin-top: 4px;">
+            During the 1990s coffee boom, hundreds of thousands of migrants settled on land managed by State Forest Enterprises. 
+            While these farms have produced coffee for over 25 years without recent clearing, provincial cadastre maps often still designate them as <em>"production forestry land"</em>.
+          </p>
+        </div>
+
+        <div style="background: var(--background); padding: var(--space-md); border-radius: var(--rounded);">
+          <strong style="color: var(--tertiary);">2. Decree 156 vs. EU Forest Definition</strong>
+          <p style="font-size: 0.875rem; margin-top: 4px;">
+            Vietnam's Forestry Law (Decree 156/2018) classifies forests by legal administration (Special-use, Protection, and Production forest). 
+            In contrast, EUDR adopts the FAO biophysical definition (≥0.5 ha, ≥10% canopy cover, trees &gt;5m). A sustainable agroforestry system can be legally agricultural in Vietnam yet trigger an EU forest flag.
+          </p>
+        </div>
+
+        <div style="background: var(--background); padding: var(--space-md); border-radius: var(--rounded);">
+          <strong style="color: var(--tertiary);">3. The 15–28% Undocumented Margin</strong>
+          <p style="font-size: 0.875rem; margin-top: 4px;">
+            Between 15% and 20% of Central Highlands coffee land (and up to 28.4% of surveyed smallholder plots in recent empirical studies) lacks official Red Books due to inheritance, customary transfers, or bureaucratic backlogs.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: FIELD SURVEY DATA & VULNERABILITY DASHBOARD -->
+  <section id="empirical-data">
+    <span class="kicker">Empirical Findings · Hoang et al. (2025) & SASI Survey</span>
+    <h2>Ground Truth: Smallholder Preparedness & Vulnerability</h2>
+    <p>
+      Recent field research across Central Highlands provinces reveals stark disparities in farmer readiness. 
+      The burden of technical compliance does not fall evenly—it strikes hardest at ethnic minority communities 
+      who possess the least institutional capital:
+    </p>
+
+    <!-- Key Statistics Visual Grid -->
+    <div class="card-grid">
+      <div class="card stat-display">
+        <span class="label-mono">Information Asymmetry</span>
+        <div class="stat-num" style="color: var(--error);">48%</div>
+        <span class="stat-caption">Of coffee smallholders have ZERO awareness of EUDR requirements</span>
+        <p style="font-size: 0.85rem; margin-top: var(--space-xs); color: var(--on-surface-variant);">
+          Driven by language barriers and reliance on informal village collectors rather than direct exporter outreach.
+        </p>
+      </div>
+
+      <div class="card stat-display">
+        <span class="label-mono">Tenure Insecurity</span>
+        <div class="stat-num" style="color: var(--tertiary);">28.4%</div>
+        <span class="stat-caption">Of surveyed coffee plots lack an official Land Use Certificate (Red Book)</span>
+        <p style="font-size: 0.85rem; margin-top: var(--space-xs); color: var(--on-surface-variant);">
+          Leaving over a quarter of smallholders vulnerable to sudden buyer disqualification under strict legality checks.
+        </p>
+      </div>
+
+      <div class="card stat-display">
+        <span class="label-mono">Digital Divide</span>
+        <div class="stat-num" style="color: var(--secondary);">30%</div>
+        <span class="stat-caption">Of smallholder households do NOT own a smartphone</span>
+        <p style="font-size: 0.85rem; margin-top: var(--space-xs); color: var(--on-surface-variant);">
+          Unable to record GPS coordinates or interact with proprietary compliance dashboards independently.
+        </p>
+      </div>
+
+      <div class="card stat-display is-leaf-highlight">
+        <span class="label-mono">Buyer Solidarity Deficit</span>
+        <div class="stat-num">Only 5%</div>
+        <span class="stat-caption">Have received direct technical or financial mapping support from EU buyers</span>
+        <p style="font-size: 0.85rem; margin-top: var(--space-xs); color: var(--on-primary-container);">
+          Highlighting the severe imbalance between downstream compliance demands and upstream enablement.
+        </p>
+      </div>
+    </div>
+
+    <!-- Comparative Demographic Deep Dive -->
+    <div class="card" style="margin-top: var(--space-lg);">
+      <h3 style="margin-top: 0;">Disproportionate Impact on Ethnic Minorities</h3>
+      <p>
+        In Dak Lak, Lam Dong, and Gia Lai, coffee production is shared between the majority Kinh population and indigenous ethnic minorities 
+        (Ede, M'nong, K'ho, Gia Rai). Empirical data demonstrates significant structural inequalities:
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-md); margin-top: var(--space-md);">
+        <div style="background: var(--background); padding: var(--space-md); border-radius: var(--rounded); border-top: 4px solid var(--secondary);">
+          <span class="label-mono">Kinh Majority Smallholders</span>
+          <ul style="font-size: 0.875rem; padding-left: 20px; margin: 8px 0 0; color: var(--on-surface);">
+            <li><strong>LURC Red Book Ownership:</strong> ~82% of plots officially documented</li>
+            <li><strong>Smartphone & Digital Access:</strong> ~85% household adoption</li>
+            <li><strong>EUDR Awareness:</strong> Moderate (information received via cooperatives and digital forums)</li>
+            <li><strong>Plot Structure:</strong> Consolidated parcels near transport corridors</li>
+          </ul>
+        </div>
+
+        <div style="background: var(--background); padding: var(--space-md); border-radius: var(--rounded); border-top: 4px solid var(--error);">
+          <span class="label-mono">Indigenous Ethnic Minorities (Ede, M'nong, K'ho)</span>
+          <ul style="font-size: 0.875rem; padding-left: 20px; margin: 8px 0 0; color: var(--on-surface);">
+            <li><strong>LURC Red Book Ownership:</strong> Only 52%–65% officially documented</li>
+            <li><strong>Smartphone & Digital Access:</strong> Under 50% household adoption</li>
+            <li><strong>EUDR Awareness:</strong> Extremely low (&lt;25%); severe Vietnamese language barrier</li>
+            <li><strong>Plot Structure:</strong> Fragmented plots (&lt;0.5 ha each) bordering natural forest margins</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: ADAPTIVE PATHWAYS & RELATIONAL GOVERNANCE -->
+  <section id="solutions">
+    <span class="kicker">Solutions & Institutional Innovation</span>
+    <h2>Adaptive Pathways: Moving from Surveillance to Relational Governance</h2>
+    
+    <p>
+      To prevent the mass exclusion of smallholders, Vietnam is pioneering a series of public-private partnerships (PPP) 
+      and landscape-level interventions that bridge European standards with rural realities:
+    </p>
+
+    <div class="card-grid">
+      <!-- Solution 1: PPI Compacts -->
+      <div class="card interactive">
+        <span class="badge badge-leaf">Landscape Approach</span>
+        <h3 style="margin-top: var(--space-xs);">PPI Compacts (Production, Protection, Inclusion)</h3>
+        <p style="font-size: 0.9375rem;">
+          Spearheaded by IDH, MARD, and local People's Committees in Dak Lak (Krong Nang) and Lam Dong (Di Linh). 
+          Instead of auditing farmers one-by-one, <strong>entire landscape jurisdictions are mapped and verified collectively</strong>. 
+          By certifying whole communes as deforestation-free safe sourcing areas, individual smallholder verification costs drop by over 70%, 
+          while diversified agroforestry lifts farmer incomes by 30%.
+        </p>
+      </div>
+
+      <!-- Solution 2: FORMIS & Terra-i+ -->
+      <div class="card interactive">
+        <span class="badge badge-ochre">National Infrastructure</span>
+        <h3 style="margin-top: var(--space-xs);">National Digital Repositories (FORMIS & Terra-i+)</h3>
+        <p style="font-size: 0.9375rem;">
+          Vietnam's Department of Forestry is integrating its Forestry Management Information System (FORMIS) with agricultural cadastral maps. 
+          By synchronizing high-resolution satellite alerts from the Terra-i+ system with official Planting Area Codes, 
+          exporters can automatically cross-reference farmer coordinates against official 2020 forest baselines without predatory third-party subscription fees.
+        </p>
+      </div>
+
+      <!-- Solution 3: Relational Governance -->
+      <div class="card interactive">
+        <span class="badge badge-slate">Value Chain Restructuring</span>
+        <h3 style="margin-top: var(--space-xs);">Shifting from Market to Relational Governance</h3>
+        <p style="font-size: 0.9375rem;">
+          As argued by Global Value Chain scholars (Gereffi, 2018; Duong et al., 2026), European roasters must abandon 
+          arm's-length "spot-market" purchasing where risk is dumped backward. Sustainable compliance requires 
+          <strong>relational governance</strong>: multi-year off-take agreements, direct cooperative contracts, and guaranteed price premiums 
+          that fund continuous farmer training and data collection.
+        </p>
+      </div>
+    </div>
+
+    <!-- Interactive Policy Lever Simulator -->
+    <div class="card" style="margin-top: var(--space-lg); background: var(--surface-container-low);">
+      <span class="label-mono">Policy Simulator</span>
+      <h3 style="margin-top: var(--space-xs);">Simulating the Impact of Governance Models on Smallholder Retention</h3>
+      <p style="font-size: 0.9375rem;">
+        Choose a policy strategy below to model its projected impact on smallholder inclusion, forest protection, and supply chain stability by 2027:
+      </p>
+
+      <div class="pill-tabs" id="policyTabs">
+        <button class="pill-tab active" onclick="simulatePolicy('laissez')">1. Pure Spot-Market (Current Trend)</button>
+        <button class="pill-tab" onclick="simulatePolicy('goldplating')">2. Corporate Gold-Plating</button>
+        <button class="pill-tab" onclick="simulatePolicy('landscape')">3. PPI Landscape Compacts</button>
+        <button class="pill-tab" onclick="simulatePolicy('relational')">4. Comprehensive Relational + Data Trust</button>
+      </div>
+
+      <div id="policyResultBox" style="background: var(--background); border-radius: var(--rounded); padding: var(--space-md); border: 1px solid var(--outline-variant);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-sm);">
+          <h4 id="policyTitle" style="margin: 0; color: var(--tertiary);">Scenario 1: Pure Spot-Market (Laissez-Faire Compliance)</h4>
+          <span id="policyBadge" class="badge badge-error">High Exclusion Risk</span>
+        </div>
+        <p id="policyDescription" style="font-size: 0.9375rem; margin: var(--space-sm) 0;">
+          European buyers mandate full geolocation declarations without cost-sharing. Exporters deduct GPS survey fees from farmgate prices. Undocumented ethnic minority plots are excluded as buyers prioritize easy-to-verify farms.
+        </p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid var(--outline-variant);">
+          <div>
+            <span class="label-mono">Smallholder Retention</span>
+            <div id="policyRetention" style="font-family: var(--font-headline); font-size: 1.5rem; font-weight: 600; color: var(--error);">58%</div>
+            <span style="font-size: 0.75rem; color: var(--on-surface-variant);">&gt;250,000 farmers excluded</span>
+          </div>
+          <div>
+            <span class="label-mono">Deforestation Leakage</span>
+            <div id="policyLeakage" style="font-family: var(--font-headline); font-size: 1.5rem; font-weight: 600; color: var(--error);">High</div>
+            <span style="font-size: 0.75rem; color: var(--on-surface-variant);">Coffee diverted to non-EU markets</span>
+          </div>
+          <div>
+            <span class="label-mono">Farmer Cost Burden</span>
+            <div id="policyCost" style="font-family: var(--font-headline); font-size: 1.5rem; font-weight: 600; color: var(--error);">100%</div>
+            <span style="font-size: 0.75rem; color: var(--on-surface-variant);">Borne entirely at farm gate</span>
+          </div>
+          <div>
+            <span class="label-mono">Traceability Integrity</span>
+            <div id="policyIntegrity" style="font-family: var(--font-headline); font-size: 1.5rem; font-weight: 600; color: var(--tertiary);">Fragile</div>
+            <span style="font-size: 0.75rem; color: var(--on-surface-variant);">Mixed lots conceal paper fraud</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: INTERACTIVE DUE DILIGENCE AUDIT LAB -->
+  <section id="audit-lab">
+    <span class="kicker">Interactive Practitioner Simulator</span>
+    <h2>The Due Diligence Audit Lab: Test Your Sourcing Decisions</h2>
+    <p>
+      Imagine you are the Chief Sustainability Officer for a major European coffee importer. 
+      Review three realistic Central Highlands sourcing cases below. 
+      Decide whether to accept the shipment into your Due Diligence Statement (DDS) or reject it under Regulation (EU) 2023/1115:
+    </p>
+
+    <!-- Case Study 1 -->
+    <div class="audit-scenario-card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-xs);">
+        <h4 style="margin: 0;">Case 1: Y-Thanh's M'nong Agroforestry Garden (Dak Nong)</h4>
+        <span class="badge badge-slate">Plot Size: 0.7 Hectares</span>
+      </div>
+      <p style="font-size: 0.9375rem; margin: var(--space-xs) 0 var(--space-sm);">
+        Y-Thanh inherited a 0.7-ha shaded coffee plot planted in 2012. 
+        Satellite imagery confirms zero canopy loss since 2015. 
+        However, the plot lacks an official Red Book because it sits on land designated as "state production forest" under 1999 provincial planning. 
+        Local authorities recognize the family's customary right, but formal title reclassification is stalled.
+      </p>
+      <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="solveAudit(1, 'accept')">Accept into Due Diligence Statement</button>
+        <button class="btn btn-secondary" onclick="solveAudit(1, 'reject')">Reject / Exclude Shipment</button>
+      </div>
+      <div id="auditFeedback1" class="audit-feedback"></div>
+    </div>
+
+    <!-- Case Study 2 -->
+    <div class="audit-scenario-card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-xs);">
+        <h4 style="margin: 0;">Case 2: Arabica Ridge Encroachment (Lam Dong)</h4>
+        <span class="badge badge-slate">Plot Size: 1.8 Hectares</span>
+      </div>
+      <p style="font-size: 0.9375rem; margin: var(--space-xs) 0 var(--space-sm);">
+        Farmer Nguyen has a pristine 2018 Red Book certificate. 
+        However, drone orthomosaics reveal that following the 2022 Arabica price surge, 
+        Nguyen cleared a 45 cm strip of adjacent natural forest understory to plant 60 additional coffee shrubs (*cuốn chiếu* technique). 
+        The primary 1.8-ha plot is 98% pre-2020 coffee, but the boundary overlaps the forest edge.
+      </p>
+      <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="solveAudit(2, 'accept')">Accept into Due Diligence Statement</button>
+        <button class="btn btn-secondary" onclick="solveAudit(2, 'reject')">Reject / Exclude Shipment</button>
+      </div>
+      <div id="auditFeedback2" class="audit-feedback"></div>
+    </div>
+
+    <!-- Case Study 3 -->
+    <div class="audit-scenario-card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-xs);">
+        <h4 style="margin: 0;">Case 3: Cooperative Aggregated Lot with One Disputed Parcel</h4>
+        <span class="badge badge-slate">Consignment: 20 Metric Tons</span>
+      </div>
+      <p style="font-size: 0.9375rem; margin: var(--space-xs) 0 var(--space-sm);">
+        A Krong Nang cooperative blends beans from 35 smallholders into a single export container. 
+        34 plots have verified GPS coordinates and no deforestation. 
+        However, the 35th parcel (0.5 ha) has a pending false-positive satellite alert triggered by bamboo flowering dieback in late 2021. 
+        The buyer needs to ship the container this week to meet European roasting delivery deadlines.
+      </p>
+      <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="solveAudit(3, 'accept')">Accept Full Container</button>
+        <button class="btn btn-secondary" onclick="solveAudit(3, 'reject')">Hold / Segregate Container</button>
+      </div>
+      <div id="auditFeedback3" class="audit-feedback"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: SYNTHESIS & POLICY RECOMMENDATIONS -->
+  <section id="recommendations">
+    <div class="card is-leaf-highlight" style="padding: var(--space-xl);">
+      <span class="kicker" style="color: var(--on-primary-container);">Roadmap for Inclusive Traceability</span>
+      <h2 style="margin-top: 0; color: var(--on-primary-container);">Four Non-Negotiables for a Just Transition</h2>
+      <p style="font-size: 1.05rem; color: var(--on-primary-container);">
+        If the European Green Deal is to achieve genuine global solidarity rather than green protectionism, 
+        traceability systems must be rebuilt around rural justice:
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-md); margin-top: var(--space-lg);">
+        <div class="card-translucent">
+          <strong style="color: var(--on-primary-container);">1. Universal Cadastral Synchronization</strong>
+          <p style="font-size: 0.875rem; margin-top: 6px; color: var(--on-primary-container);">
+            Accelerate the national conversion of historical forestry land into official agricultural Red Books for smallholders with established cultivation prior to Dec 31, 2020.
+          </p>
+        </div>
+
+        <div class="card-translucent">
+          <strong style="color: var(--on-primary-container);">2. Mandatory Buyer Cost-Sharing</strong>
+          <p style="font-size: 0.875rem; margin-top: 6px; color: var(--on-primary-container);">
+            Prohibit predatory contract clauses that push 100% of audit liability onto local exporters. European roasters should contribute to a national compliance fund ($0.02/kg).
+          </p>
+        </div>
+
+        <div class="card-translucent">
+          <strong style="color: var(--on-primary-container);">3. Cooperative Data Sovereignty Trusts</strong>
+          <p style="font-size: 0.875rem; margin-top: 6px; color: var(--on-primary-container);">
+            Farm geolocation data must remain under the stewardship of local cooperatives. Agro-industrial platforms should access verified hash keys, not extract raw coordinates.
+          </p>
+        </div>
+
+        <div class="card-translucent">
+          <strong style="color: var(--on-primary-container);">4. Preferential Green Credit</strong>
+          <p style="font-size: 0.875rem; margin-top: 6px; color: var(--on-primary-container);">
+            Establish collateral-free micro-credit lines to help smallholders finance sustainable shade-tree intercropping, soil regeneration, and digital cadastral registration.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: SOURCE ATTRIBUTIONS & REFERENCES -->
+  <section id="references">
+    <div class="card" style="background: var(--surface-container-low);">
+      <span class="label-mono">Documentary & Empirical Sources</span>
+      <h3 style="margin-top: var(--space-xs);">References & Research Attribution</h3>
+      
+      <div style="font-size: 0.85rem; color: var(--on-surface-variant); line-height: 1.6; margin-top: var(--space-sm);">
+        <p style="margin-bottom: 6px;">
+          <strong>European Parliament & Council (2023):</strong> Regulation (EU) 2023/1115 on deforestation-free products (EUDR), Official Journal of the European Union, PE-CONS 82/22.
+        </p>
+        <p style="margin-bottom: 6px;">
+          <strong>Hoang, T. Q., Hien, N. T., Hop, V. T. B., Khanh, H. L. P., Anh, D. T. L., & Ubukata, F. (2025):</strong> <em>Navigating EU deforestation regulation compliance: challenges for coffee smallholders in Vietnam</em>, Forests, Trees and Livelihoods, 35(1), 59–81.
+        </p>
+        <p style="margin-bottom: 6px;">
+          <strong>Duong, D. H. N., Nguyen, M. H., Nguyen, T. D., Phi, K. N., & Vu, H. P. (2026):</strong> <em>Applying the EU Deforestation Regulation for Vietnam's Coffee Exports: Impacts, Adaptation, and Policy Implications</em>, FTU Working Paper Series, Vol. 1, No. 6, Foreign Trade University, Hanoi.
+        </p>
+        <p style="margin-bottom: 6px;">
+          <strong>Bourgoin, C., Verhegghen, A., Carboni, S., et al. (2024, 2026):</strong> <em>GFC2020: a global map of forest land use for year 2020 to support the EU Deforestation Regulation</em>, Earth System Science Data, 18, 1331; JRC Technical Report EUR 31888.
+        </p>
+        <p style="margin-bottom: 6px;">
+          <strong>Sustainable Agricultural Supply Chains Initiative - SASI / GIZ (2024):</strong> <em>Applied Due Diligence: Lessons learned through the Due Diligence Fund</em>, commissioned by BMZ, implemented by GIZ GmbH, Bonn.
+        </p>
+        <p style="margin-bottom: 6px;">
+          <strong>Wageningen University & Research (2023):</strong> <em>The anticipated impacts of the EUDR on deforestation, forest degradation, and coffee producing households</em>, Wageningen.
+        </p>
+        <p style="margin-bottom: 0;">
+          <strong>Expert Interviews:</strong> Nguyen Thi Thuc Anh, Senior Technical GIS Consultant for International Forestry & Agriculture NGOs, Hanoi; Ministry of Agriculture and Rural Development (MARD) & IDH Vietnam Landscape Reports (2023–2025).
+        </p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- State persistence shim component -->
+<api-shim></api-shim>
+
+<script>
+  // DEFENSIVE JAVASCRIPT & STATE MANAGEMENT
+
+  // Global state object
+  let appState = {
+    selectedDimension: 'cost',
+    farmSize: 0.9,
+    plotCount: 2,
+    buyerSupport: 0,
+    selectedNode: 1,
+    selectedSensor: 'landsat',
+    selectedPolicy: 'laissez',
+    auditChoices: {}
+  };
+
+  // Hoisted event handlers
+  function switchDimension(dimKey) {
+    appState.selectedDimension = dimKey;
+    const tabs = document.querySelectorAll('#dimensionTabs .pill-tab');
+    if (tabs.length >= 3) {
+      tabs[0].classList.toggle('active', dimKey === 'cost');
+      tabs[1].classList.toggle('active', dimKey === 'access');
+      tabs[2].classList.toggle('active', dimKey === 'sovereignty');
+    }
+
+    const cCost = document.getElementById('dimensionContentCost');
+    const cAccess = document.getElementById('dimensionContentAccess');
+    const cSov = document.getElementById('dimensionContentSovereignty');
+
+    if (cCost) cCost.style.display = (dimKey === 'cost') ? 'block' : 'none';
+    if (cAccess) cAccess.style.display = (dimKey === 'access') ? 'block' : 'none';
+    if (cSov) cSov.style.display = (dimKey === 'sovereignty') ? 'block' : 'none';
+
+    persistState();
+  }
+
+  function updateCostModel() {
+    const sizeInput = document.getElementById('calcFarmSize');
+    const plotsInput = document.getElementById('calcPlotCount');
+    const supportInput = document.getElementById('calcBuyerSupport');
+
+    if (!sizeInput || !plotsInput || !supportInput) return;
+
+    const farmSize = parseFloat(sizeInput.value);
+    const plotCount = parseInt(plotsInput.value, 10);
+    const buyerSupport = parseInt(supportInput.value, 10);
+
+    appState.farmSize = farmSize;
+    appState.plotCount = plotCount;
+    appState.buyerSupport = buyerSupport;
+
+    const sizeValEl = document.getElementById('farmSizeVal');
+    const plotValEl = document.getElementById('plotCountVal');
+    const supportValEl = document.getElementById('buyerSupportVal');
+
+    if (sizeValEl) sizeValEl.textContent = farmSize.toFixed(1);
+    if (plotValEl) plotValEl.textContent = plotCount.toString();
+    if (supportValEl) supportValEl.textContent = buyerSupport.toString();
+
+    // Cost logic: $45 base survey + $20 per additional parcel + $15 cloud platform filing
+    const totalSurveyFee = 45 + (plotCount - 1) * 25 + 15;
+    const farmerPortion = totalSurveyFee * (1 - buyerSupport / 100);
+
+    // Net income estimation: ~2.2 tons Robusta/ha * ~$1800/ton minus $1900 inputs = ~$2060/ha net
+    const estimatedNetIncome = Math.max(farmSize * 2100, 800);
+    const impactPct = (farmerPortion / estimatedNetIncome) * 100;
+
+    const feeEl = document.getElementById('estSurveyCost');
+    const farmerEl = document.getElementById('estFarmerCost');
+    const impactEl = document.getElementById('estIncomeImpact');
+
+    if (feeEl) feeEl.textContent = '$' + totalSurveyFee.toFixed(2);
+    if (farmerEl) farmerEl.textContent = '$' + farmerPortion.toFixed(2);
+    if (impactEl) impactEl.textContent = impactPct.toFixed(1) + '%';
+
+    persistState();
+  }
+
+  const nodeData = {
+    1: {
+      title: "Stage 01: The Smallholder Farm (Highland Agroforestry)",
+      body: `The foundation of Vietnam's Robusta miracle: approximately 600,000 farming households tending small plots (average 0.8 to 1.2 hectares). Many plots intercrop coffee with pepper vines, durian, and shade trees to build ecological resilience. However, 30% of farmers lack smartphones, and many ethnic minority producers (Ede, M'nong, K'ho) face Vietnamese language barriers, making standalone digital reporting nearly impossible without cooperative assistance.`,
+      requirement: "Plot coordinates (single point for <4 ha; polygons demanded by buyers).",
+      risk: "Missing Red Book land titles; boundary overlap with state forestry zoning."
+    },
+    2: {
+      title: "Stage 02: Level 2 Agent (Đại Lý Cấp 2 / Village Intermediaries)",
+      body: `Smallholders rarely sell directly to corporate mills. Instead, independent village collectors visit farms on motorbikes during the November–January harvest, paying immediate cash and providing informal seasonal credit for fertilizer. Because beans from dozens of neighbors are poured into the same truck bed, plot-level physical segregation is completely obliterated at this first transaction point.`,
+      requirement: "Supplier identification and lot provenance records.",
+      risk: "Informal cash transactions lack digital invoices; beans from compliant and non-compliant plots are intermingled."
+    },
+    3: {
+      title: "Stage 03: Level 1 Collector (Đại Lý Cấp 1 / District Aggregation)",
+      body: `District-level warehouses consolidate coffee from hundreds of Level 2 agents. They perform preliminary mechanical drying, hulling, and storage. Over 90% of Vietnamese coffee passes through this node. Traditional spot-market incentives prioritize speed and volume over digital data preservation. Without barcode or RFID bag-tagging infrastructure, identity preservation collapses.`,
+      requirement: "Traceability linking aggregated lots to underlying geolocation points.",
+      risk: "Blending lots from non-compliant forest-adjacent parcels with compliant lowland coffee."
+    },
+    4: {
+      title: "Stage 04: Processing Mills & Provincial Exporters",
+      body: `Large exporters (such as Simexco Daklak, Intimex, ECOM Vietnam, Vinh Hiep) process beans into export grades. They run cleaning, gravity separation, and color-sorting lines. Exporters are caught in the vise: European roasters demand complete farm polygons and indemnification guarantees, while upstream supply chains consist of anonymous bulk deliveries from hundreds of rural đại lý.`,
+      requirement: "Assembly of Due Diligence Statement (DDS) with all farm coordinates.",
+      risk: "Assuming 100% legal liability under foreign buyer contracts while having limited control over upstream đại lý."
+    },
+    5: {
+      title: "Stage 05: European Port of Entry, Roasters & Retail Brands",
+      body: `Consignments arrive in Hamburg, Rotterdam, or Antwerp. EU operators submit the reference number into the centralized EU Information System. European roasters (Nestlé, JDE Peet's, Lavazza) market sustainable espresso to consumers. While enjoying significant retail margins, they maintain zero-tolerance policies on border rejections, prompting them to black-list entire districts rather than assist smallholders.`,
+      requirement: "Filing DDS confirming negligible risk of deforestation and full legal compliance.",
+      risk: "Withdrawing to Brazilian plantations ('safe-zone retreat') to avoid verification headaches in Vietnam."
+    }
+  };
+
+  function selectSupplyNode(nodeId) {
+    appState.selectedNode = nodeId;
+    for (let i = 1; i <= 5; i++) {
+      const el = document.getElementById('node-' + i);
+      if (el) el.classList.toggle('active', i === nodeId);
+    }
+
+    const info = nodeData[nodeId];
+    if (info) {
+      const titleEl = document.getElementById('nodeDetailTitle');
+      const bodyEl = document.getElementById('nodeDetailBody');
+      if (titleEl) titleEl.textContent = info.title;
+      if (bodyEl) {
+        bodyEl.innerHTML = `
+          <p>${info.body}</p>
+          <div style="display: flex; gap: var(--space-md); flex-wrap: wrap; margin-top: var(--space-sm);">
+            <div><span class="label-mono">EUDR Requirement:</span> ${info.requirement}</div>
+            <div><span class="label-mono">Primary Bottleneck:</span> ${info.risk}</div>
+          </div>
+        `;
+      }
+    }
+
+    persistState();
+  }
+
+  function setSensorView(sensorKey) {
+    appState.selectedSensor = sensorKey;
+    const tabs = document.querySelectorAll('#micro-encroachment .encroach-container .pill-tab');
+    if (tabs.length >= 3) {
+      tabs[0].classList.toggle('active', sensorKey === 'landsat');
+      tabs[1].classList.toggle('active', sensorKey === 'sentinel');
+      tabs[2].classList.toggle('active', sensorKey === 'drone');
+    }
+
+    const gridOverlay = document.getElementById('sensorGridOverlay');
+    const titleEl = document.getElementById('sensorTitle');
+    const descEl = document.getElementById('sensorDesc');
+    const shrubs = document.getElementById('encroachShrubs');
+
+    if (sensorKey === 'landsat') {
+      if (gridOverlay) gridOverlay.setAttribute('fill', 'url(#grid30m)');
+      if (titleEl) {
+        titleEl.textContent = 'Landsat-8 (30-meter Resolution): Undetected';
+        titleEl.style.color = 'var(--error)';
+      }
+      if (descEl) {
+        descEl.textContent = 'At 30m resolution, one sensor pixel covers 900 m². The 40–50 cm encroachment strip represents barely 5% of a single pixel. Coarse spectral analysis shows "stable forest canopy," completely missing the quiet clearance.';
+      }
+      if (shrubs) shrubs.setAttribute('opacity', '0.2');
+    } else if (sensorKey === 'sentinel') {
+      if (gridOverlay) gridOverlay.setAttribute('fill', 'url(#grid10m)');
+      if (titleEl) {
+        titleEl.textContent = 'Sentinel-2 (10-meter Resolution): Ambiguous Spectral Signature';
+        titleEl.style.color = 'var(--warning)';
+      }
+      if (descEl) {
+        descEl.textContent = 'At 10m resolution (1 pixel = 100 m²), boundary pixels capture a mixed reflectance of native trees and young coffee leaves. In shaded Robusta agroforestry, the vegetation index (NDVI) closely mirrors natural forest, creating frequent classification disputes.';
+      }
+      if (shrubs) shrubs.setAttribute('opacity', '0.6');
+    } else {
+      if (gridOverlay) gridOverlay.setAttribute('fill', 'url(#grid3m)');
+      if (titleEl) {
+        titleEl.textContent = 'PlanetScope / Drone Orthomosaic (3-meter Resolution): Visible Encroachment';
+        titleEl.style.color = 'var(--primary)';
+      }
+      if (descEl) {
+        descEl.textContent = 'High-resolution commercial sensors cleanly delineate the individual row of newly planted coffee bushes along the forest edge. However, commercial imagery requires expensive private subscriptions or drone flights that smallholders cannot afford.';
+      }
+      if (shrubs) shrubs.setAttribute('opacity', '1.0');
+    }
+
+    persistState();
+  }
+
+  const policyData = {
+    laissez: {
+      title: "Scenario 1: Pure Spot-Market (Laissez-Faire Compliance)",
+      badge: "High Exclusion Risk",
+      badgeClass: "badge-error",
+      desc: "European buyers mandate full geolocation declarations without cost-sharing. Exporters deduct GPS survey fees from farmgate prices. Undocumented ethnic minority plots are excluded as buyers prioritize easy-to-verify farms.",
+      retention: "58%",
+      retentionNote: ">250,000 farmers excluded",
+      retentionColor: "var(--error)",
+      leakage: "High",
+      leakageColor: "var(--error)",
+      cost: "100%",
+      costColor: "var(--error)",
+      integrity: "Fragile",
+      integrityColor: "var(--tertiary)"
+    },
+    goldplating: {
+      title: "Scenario 2: Corporate 'Gold-Plating' & Buffer Zone Bans",
+      badge: "Extreme Exclusion Risk",
+      badgeClass: "badge-error",
+      desc: "Buyers require 100% polygon mapping for 0.3 ha gardens, demand pristine Red Books, and blacklist all forest buffer zones. Smallholders abandon compliant trade to sell into unregulated domestic and non-EU export channels.",
+      retention: "38%",
+      retentionNote: ">370,000 farmers excluded",
+      retentionColor: "var(--error)",
+      leakage: "Severe",
+      leakageColor: "var(--error)",
+      cost: "100%",
+      costColor: "var(--error)",
+      integrity: "Superficial",
+      integrityColor: "var(--error)"
+    },
+    landscape: {
+      title: "Scenario 3: PPI Landscape Compacts (Di Linh Model)",
+      badge: "Balanced & Scalable",
+      badgeClass: "badge-leaf",
+      desc: "Local People's Committees, IDH, and exporters verify entire communes collectively. Costs are shared across public budgets and exporter consortiums. Agroforestry intercropping boosts farm net income by 30%.",
+      retention: "88%",
+      retentionNote: "High smallholder retention",
+      retentionColor: "var(--primary)",
+      leakage: "Low",
+      leakageColor: "var(--primary)",
+      cost: "30%",
+      costColor: "var(--primary)",
+      integrity: "Robust",
+      integrityColor: "var(--primary)"
+    },
+    relational: {
+      title: "Scenario 4: Relational Governance + Cooperative Data Trust",
+      badge: "Optimal Rural Justice",
+      badgeClass: "badge-leaf",
+      desc: "Long-term off-take agreements with living income price premiums ($0.02/kg EUDR compliance dividend). Cooperatives retain data ownership. Collateral-free green credit finances titling and ecological shade transition.",
+      retention: "96%",
+      retentionNote: "Nearly universal inclusion",
+      retentionColor: "var(--primary)",
+      leakage: "Negligible",
+      leakageColor: "var(--primary)",
+      cost: "0%",
+      costColor: "var(--primary)",
+      integrity: "Verified",
+      integrityColor: "var(--primary)"
+    }
+  };
+
+  function simulatePolicy(polKey) {
+    appState.selectedPolicy = polKey;
+    const tabs = document.querySelectorAll('#policyTabs .pill-tab');
+    if (tabs.length >= 4) {
+      tabs[0].classList.toggle('active', polKey === 'laissez');
+      tabs[1].classList.toggle('active', polKey === 'goldplating');
+      tabs[2].classList.toggle('active', polKey === 'landscape');
+      tabs[3].classList.toggle('active', polKey === 'relational');
+    }
+
+    const p = policyData[polKey];
+    if (p) {
+      const titleEl = document.getElementById('policyTitle');
+      const badgeEl = document.getElementById('policyBadge');
+      const descEl = document.getElementById('policyDescription');
+      const retEl = document.getElementById('policyRetention');
+      const leakEl = document.getElementById('policyLeakage');
+      const costEl = document.getElementById('policyCost');
+      const intEl = document.getElementById('policyIntegrity');
+
+      if (titleEl) titleEl.textContent = p.title;
+      if (badgeEl) {
+        badgeEl.textContent = p.badge;
+        badgeEl.className = 'badge ' + p.badgeClass;
+      }
+      if (descEl) descEl.textContent = p.desc;
+      if (retEl) {
+        retEl.textContent = p.retention;
+        retEl.style.color = p.retentionColor;
+      }
+      if (leakEl) {
+        leakEl.textContent = p.leakage;
+        leakEl.style.color = p.leakageColor;
+      }
+      if (costEl) {
+        costEl.textContent = p.cost;
+        costEl.style.color = p.costColor;
+      }
+      if (intEl) {
+        intEl.textContent = p.integrity;
+        intEl.style.color = p.integrityColor;
+      }
+    }
+
+    persistState();
+  }
+
+  function solveAudit(caseNum, action) {
+    const feedbackEl = document.getElementById('auditFeedback' + caseNum);
+    if (!feedbackEl) return;
+
+    feedbackEl.className = 'audit-feedback show';
+    appState.auditChoices[caseNum] = action;
+
+    if (caseNum === 1) {
+      if (action === 'accept') {
+        feedbackEl.classList.add('at-risk');
+        feedbackEl.innerHTML = `
+          <strong>Legal Risk Flagged:</strong> Under Article 3, goods must comply with local land-use laws. Even though zero deforestation occurred after 2020, cultivating on unregularized "forestry land" creates legal vulnerability if inspected by EU competent authorities. However, under Vietnam's MARD Circulars, local customary rights can be accepted during the transitional cadastre pilot. Rejecting Y-Thanh forces an innocent smallholder into poverty. Best practice: file an interim administrative regularisation affidavit with local People's Committee support.
+        `;
+      } else {
+        feedbackEl.classList.add('at-risk');
+        feedbackEl.innerHTML = `
+          <strong>Safe Sourcing, but High Social Cost:</strong> Rejecting Y-Thanh eliminates corporate audit risk, but pushes an indigenous farmer with pre-2020 established trees out of the European market. This is the exact definition of "Safe-Zone Exclusion."
+        `;
+      }
+    } else if (caseNum === 2) {
+      if (action === 'accept') {
+        feedbackEl.classList.add('non-compliant');
+        feedbackEl.innerHTML = `
+          <strong>Violation of Article 3 & Article 10:</strong> Even though the encroachment was only 45 cm (60 trees), EUDR does not specify a de minimis deforestation threshold. Sourcing from land deforested after 31 Dec 2020 violates EU law. If detected via high-res satellite or drone audits, the importer faces fines up to 4% of EU annual turnover. The parcel must be excised from the consignment.
+        `;
+      } else {
+        feedbackEl.classList.add('compliant');
+        feedbackEl.innerHTML = `
+          <strong>Correct Legal Decision:</strong> Under Article 3, products grown on land deforested post-2020 cannot enter the EU. The exporter must require Farmer Nguyen to segregate the post-2020 edge row and submit coordinates exclusively for the compliant pre-2020 portion.
+        `;
+      }
+    } else if (caseNum === 3) {
+      if (action === 'accept') {
+        feedbackEl.classList.add('non-compliant');
+        feedbackEl.innerHTML = `
+          <strong>Strict Supply Chain Contamination Risk:</strong> Under EUDR Article 4, if a blended batch contains even one non-compliant parcel, the entire consignment is legally contaminated. Importers must not file a DDS while a satellite deforestation alert remains unresolved without on-the-ground field verification proving the bamboo dieback was a false positive.
+        `;
+      } else {
+        feedbackEl.classList.add('compliant');
+        feedbackEl.innerHTML = `
+          <strong>Correct Operational Mitigation:</strong> Segregate the disputed 0.5 ha parcel immediately. The remaining 34 compliant parcels can be legally exported. Dispatch the local cooperative field team with GPS geotagged photo evidence to prove the bamboo false positive to the competent authority.
+        `;
+      }
+    }
+
+    persistState();
+  }
+
+  // State persistence functions
+  async function persistState() {
+    if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+      try {
+        await window.notebookAppApi.setAppState(appState);
+      } catch (err) {
+        // Silent catch for sandboxed environments
+      }
+    }
+  }
+
+  async function loadInitialState() {
+    if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+      try {
+        const saved = await window.notebookAppApi.getAppState();
+        if (saved && typeof saved === 'object') {
+          appState = Object.assign(appState, saved);
+          
+          if (appState.selectedDimension) switchDimension(appState.selectedDimension);
+          if (appState.farmSize) {
+            const sEl = document.getElementById('calcFarmSize');
+            if (sEl) sEl.value = appState.farmSize;
+          }
+          if (appState.plotCount) {
+            const pEl = document.getElementById('calcPlotCount');
+            if (pEl) pEl.value = appState.plotCount;
+          }
+          if (appState.buyerSupport !== undefined) {
+            const bEl = document.getElementById('calcBuyerSupport');
+            if (bEl) bEl.value = appState.buyerSupport;
+          }
+          updateCostModel();
+
+          if (appState.selectedNode) selectSupplyNode(appState.selectedNode);
+          if (appState.selectedSensor) setSensorView(appState.selectedSensor);
+          if (appState.selectedPolicy) simulatePolicy(appState.selectedPolicy);
+
+          if (appState.auditChoices) {
+            for (const k in appState.auditChoices) {
+              solveAudit(parseInt(k, 10), appState.auditChoices[k]);
+            }
+          }
+        }
+      } catch (err) {
+        // Silent catch
+      }
+    }
+
+    if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+      window.notebookAppApi.notifyAppReady();
+    }
+  }
+
+  // Run on page load
+  window.addEventListener('DOMContentLoaded', function() {
+    updateCostModel();
+    loadInitialState();
+  });
+</script>
+
+</body>
+</html>
